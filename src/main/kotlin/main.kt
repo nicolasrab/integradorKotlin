@@ -11,7 +11,7 @@ data class Parkable(var vehicle :Vehicle){
 
 data class Parking(val vehicles: MutableSet<Vehicle>){
     fun addVehicle(vehicle:Vehicle) : Boolean{
-        if (vehicles.size <= 20){
+        if (vehicles.size < 20){
             vehicles.add(vehicle)
             return true
         }
@@ -50,15 +50,18 @@ fun main() {
     val minibus = Vehicle("CC333CC",VehicleType.MINIBUS, Calendar.getInstance())
     val bus = Vehicle("DD444DD",VehicleType.BUS, Calendar.getInstance(),"DISCOUNT_CARD_002")
     val parking = Parking(mutableSetOf(car,moto,minibus,bus))
-    parking.vehicles.remove(moto)
     println(parking.vehicles.contains(car))
     println(parking.vehicles.contains(moto))
     println(parking.vehicles.contains(minibus))
     println(parking.vehicles.contains(bus))
+    for(num in 1..20) {
+        println("num: $num - Inserted: " + parking.addVehicle(car.copy("AA11$num BB")))
+    }
+    parking.vehicles.map {
+        println(it.plate)
+    }
+    println(parking.vehicles.size)
 
-    val car2 = Vehicle("AA111AA",VehicleType.CAR, Calendar.getInstance(),"DISCOUNT_CARD_001")
-    val isCarInserted = parking.vehicles.add(car2)
-    println(isCarInserted)
 
 
 }
