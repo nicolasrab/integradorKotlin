@@ -54,24 +54,14 @@ enum class VehicleType(val value : Int){
 }
 
 fun main() {
-    // Maximo 20 vehiculos
-    val car = Vehicle("AA111AA",VehicleType.CAR, Calendar.getInstance(),"DISCOUNT_CARD_001")
-    val moto = Vehicle("B222BBB",VehicleType.MOTORCYCLE, Calendar.getInstance())
-    val minibus = Vehicle("CC333CC",VehicleType.MINIBUS, Calendar.getInstance())
-    val bus = Vehicle("DD444DD",VehicleType.BUS, Calendar.getInstance(),"DISCOUNT_CARD_002")
-    val parking = Parking(mutableSetOf(car,moto,minibus,bus))
-    //prueba patente repetida
-    val car2 = Vehicle("AA111AA",VehicleType.CAR, Calendar.getInstance(),"DISCOUNT_CARD_001")
-    parking.checkIn(car2)
-
+    val parking = Parking(mutableSetOf())
     //prueba cargar 20 sabiendo que hay 4 cargados, deberia fallar 4 veces
-    for(num in 1..20) {
-        parking.checkIn(car.copy("AA11$num BB"))
+    for(num in 1..30) {
+        parking.checkIn(Vehicle("AA1${num}1AA",VehicleType.CAR, Calendar.getInstance(),"DISCOUNT_CARD_001"))
     }
-    //total
-    println(parking.vehicles.size)
-
-
+    parking.vehicles.map {
+        println(it.plate)
+    }
 
 }
 
