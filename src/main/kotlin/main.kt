@@ -3,7 +3,7 @@ import java.util.*
 // Respuesta Ejercicio 1: en un Set no importa el orden, y además no pueden existir dos elementos iguales.
 
 // Ejercicio 2 y 3 :
-//const val MINUTES_IN_MILISECONDS = 60000
+const val MINUTES_IN_MILISECONDS = 60000
 
 data class Parkable(var vehicle :Vehicle){
     var plate = vehicle.plate
@@ -11,8 +11,9 @@ data class Parkable(var vehicle :Vehicle){
 
 data class Parking(val vehicles: MutableSet<Vehicle>)
 
-data class Vehicle(val plate: String, val Type: VehicleType, val checkInTime: Calendar, val discountCard: String?){
-
+data class Vehicle(val plate: String, val Type: VehicleType, val checkInTime: Calendar, val discountCard: String? = null){
+    val parkedTime : Long
+        get() = (Calendar.getInstance().timeInMillis - checkInTime.timeInMillis) / MINUTES_IN_MILISECONDS
     override fun equals(other :Any?): Boolean {
         if (other is Vehicle){
             return this.plate == other.plate
@@ -29,17 +30,24 @@ data class Vehicle(val plate: String, val Type: VehicleType, val checkInTime: Ca
 
 enum class VehicleType(val value : Int){
     CAR(20),
-    MOTORBIKE(15),
+    MOTORCYCLE(15),
     MINIBUS(25),
     BUS(30)
 }
 
 fun main() {
     // Maximo 20 vehiculos
+    val car = Vehicle("AA111AA",VehicleType.CAR, Calendar.getInstance(),"DISCOUNT_CARD_001")
+    val moto = Vehicle("B222BBB",VehicleType.MOTORCYCLE, Calendar.getInstance())
+    val minibus = Vehicle("CC333CC",VehicleType.MINIBUS, Calendar.getInstance())
+    val bus = Vehicle("DD444DD",VehicleType.BUS, Calendar.getInstance(),"DISCOUNT_CARD_002")
+    val parking = Parking(mutableSetOf(car,moto,minibus,bus))
 
-println(Calendar.MINUTE)
+    println(parking.vehicles.contains(car))
+    println(parking.vehicles.contains(moto))
+    println(parking.vehicles.contains(minibus))
+    println(parking.vehicles.contains(bus))
 
-    // Ejercicio 2:
 
 }
 
