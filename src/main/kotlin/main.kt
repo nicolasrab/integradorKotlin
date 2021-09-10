@@ -4,17 +4,27 @@ import java.util.*
 
 // Ejercicio 2 y 3 :
 const val MINUTES_IN_MILISECONDS = 60000
+const val PLACES_AVAILABLES = 20
 
 data class Parkable(var vehicle :Vehicle){
     var plate = vehicle.plate
 }
 
 data class Parking(val vehicles: MutableSet<Vehicle>){
-    fun addVehicle(vehicle:Vehicle) : Boolean{
-        if (vehicles.size < 20){
-            vehicles.add(vehicle)
-            return true
+
+    var emptyPlaces = PLACES_AVAILABLES - vehicles.size
+
+    fun checkIn(vehicle: Vehicle){
+        if(emptyPlaces != 0 && addVehicle(vehicle)){
+                println("Welcome to AlkeParking!")
+                emptyPlaces--
         }
+            else println("Sorry, the check-in failed")
+    }
+
+    fun addVehicle(vehicle:Vehicle) : Boolean{
+        if (vehicles.size < PLACES_AVAILABLES)
+            return vehicles.add(vehicle)
         return false
     }
 }
@@ -50,16 +60,15 @@ fun main() {
     val minibus = Vehicle("CC333CC",VehicleType.MINIBUS, Calendar.getInstance())
     val bus = Vehicle("DD444DD",VehicleType.BUS, Calendar.getInstance(),"DISCOUNT_CARD_002")
     val parking = Parking(mutableSetOf(car,moto,minibus,bus))
-    println(parking.vehicles.contains(car))
-    println(parking.vehicles.contains(moto))
-    println(parking.vehicles.contains(minibus))
-    println(parking.vehicles.contains(bus))
+    //prueba patente repetida
+    val car2 = Vehicle("AA111AA",VehicleType.CAR, Calendar.getInstance(),"DISCOUNT_CARD_001")
+    parking.checkIn(car2)
+
+    //prueba cargar 20 sabiendo que hay 4 cargados, deberia fallar 4 veces
     for(num in 1..20) {
-        println("num: $num - Inserted: " + parking.addVehicle(car.copy("AA11$num BB")))
+        parking.checkIn(car.copy("AA11$num BB"))
     }
-    parking.vehicles.map {
-        println(it.plate)
-    }
+    //total
     println(parking.vehicles.size)
 
 
