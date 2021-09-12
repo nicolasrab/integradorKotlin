@@ -9,9 +9,10 @@ const val PLACES_AVAILABLES = 20
 
 data class Parkable(var vehicle: Vehicle) {
     var plate = vehicle.plate
-    val parkedTime: Long
-        get() = (Calendar.getInstance().timeInMillis - vehicle.checkInTime.timeInMillis) / MINUTES_IN_MILISECONDS
+//    val parkedTime: Long
+//        get() = (Calendar.getInstance().timeInMillis - vehicle.checkInTime.timeInMillis) / MINUTES_IN_MILISECONDS
 
+    val parkedTime = 198.toLong()
     fun calculateFee() : Int{
         return applyDiscount(calculatePricePerTime())
     }
@@ -142,7 +143,7 @@ fun main() {
     val minibus2 = Vehicle("FF666FF",VehicleType.MINIBUS, Calendar.getInstance(),"DISCOUNT_CARD_004")
     val bus2 = Vehicle("GG777GG",VehicleType.BUS, Calendar.getInstance())
 
-    val car3 = Vehicle("HH888HH",VehicleType.CAR, Calendar.getInstance(),"DISCOUNT_CARD_005")
+    val car3 = Vehicle("HH888HH",VehicleType.CAR, Calendar.getInstance())
     val moto3 = Vehicle("II999II",VehicleType.MOTORCYCLE, Calendar.getInstance())
     val minibus3 = Vehicle("JJ000JJ",VehicleType.MINIBUS, Calendar.getInstance(),"DISCOUNT_CARD_006")
     val bus3 = Vehicle("KK100KK",VehicleType.BUS, Calendar.getInstance())
@@ -176,7 +177,13 @@ fun main() {
     }
 
 
-    parking.checkOutVehicle("AA111AA",{println("Your fee is $it. Come back soon.")},{ println("Sorry, the check-out failed")})
+    parking.checkOutVehicle("HH888HH",{println("Your fee is $it. Come back soon.")},{ println("Sorry, the check-out failed")})
+    parking.checkOutVehicle("RR800RR",{println("Your fee is $it. Come back soon.")},{ println("Sorry, the check-out failed")})
+    parking.checkOutVehicle("TT010TT",{println("Your fee is $it. Come back soon.")},{ println("Sorry, the check-out failed")})
+    parking.checkOutVehicle("TT010TT",{println("Your fee is $it. Come back soon.")},{ println("Sorry, the check-out failed")})
+
     parking.listParking()
+
+    parking.showRetiredVehiclesInformation()
 }
 
