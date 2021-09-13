@@ -2,7 +2,6 @@ import java.util.*
 import kotlin.math.ceil
 
 // Respuesta Ejercicio 1: en un Set no importa el orden, y además no pueden existir dos elementos iguales.
-// Ejercicio 2 y 3 :
 
 const val MINUTES_IN_MILISECONDS = 60000
 const val PLACES_AVAILABLES = 20
@@ -131,6 +130,35 @@ enum class VehicleType(val value: Int) {
 fun main() {
     val parking = Parking(mutableSetOf())
 
+    val listVehicles = initData()
+
+    listVehicles.map {
+        parking.checkIn(it)
+    }
+
+    parking.checkOutVehicle("HH888HH",
+        { println("Your fee is $it. Come back soon.") },
+        { println("Sorry, the check-out failed") })
+
+    parking.checkOutVehicle("RR800RR",
+        { println("Your fee is $it. Come back soon.") },
+        { println("Sorry, the check-out failed") })
+
+    parking.checkOutVehicle("TT010TT",
+        { println("Your fee is $it. Come back soon.") },
+        { println("Sorry, the check-out failed") })
+
+    parking.checkOutVehicle("TT010TT",
+        { println("Your fee is $it. Come back soon.") },
+        { println("Sorry, the check-out failed") })
+
+    parking.listParking()
+
+    parking.showRetiredVehiclesInformation()
+}
+
+fun initData(): List<Vehicle> {
+
     val car = Vehicle("AA111AA", VehicleType.CAR, Calendar.getInstance(), "DISCOUNT_CARD_001")
     val moto = Vehicle("BB222BB", VehicleType.MOTORCYCLE, Calendar.getInstance())
     val minibus = Vehicle("CC333CC", VehicleType.MINIBUS, Calendar.getInstance(), "DISCOUNT_CARD_002")
@@ -161,36 +189,11 @@ fun main() {
     val minibus6 = Vehicle("VV030VV", VehicleType.MINIBUS, Calendar.getInstance(), "DISCOUNT_CARD_012")
     val bus6 = Vehicle("WW040WW", VehicleType.BUS, Calendar.getInstance())
 
-    val listVehicles = listOf(
+    return listOf(
         car, car2, car3, car4, car5, car6,
         moto, moto2, moto3, moto4, moto5, moto6,
         minibus, minibus2, minibus3, minibus4, minibus5, minibus6,
         bus, bus2, bus3, bus4, bus5, bus6
     )
-
-    //for (num in 1..30) {
-    //  parking.checkIn(Vehicle("AA1${num}1AA", VehicleType.CAR, Calendar.getInstance(), "DISCOUNT_CARD_001"))
-    //}
-    listVehicles.map {
-        parking.checkIn(it)
-    }
-
-
-    parking.checkOutVehicle("HH888HH",
-        { println("Your fee is $it. Come back soon.") },
-        { println("Sorry, the check-out failed") })
-    parking.checkOutVehicle("RR800RR",
-        { println("Your fee is $it. Come back soon.") },
-        { println("Sorry, the check-out failed") })
-    parking.checkOutVehicle("TT010TT",
-        { println("Your fee is $it. Come back soon.") },
-        { println("Sorry, the check-out failed") })
-    parking.checkOutVehicle("TT010TT",
-        { println("Your fee is $it. Come back soon.") },
-        { println("Sorry, the check-out failed") })
-
-    parking.listParking()
-
-    parking.showRetiredVehiclesInformation()
 }
 
