@@ -32,8 +32,7 @@ data class Parking(val parkables: MutableSet<Parkable>) {
     }
 
     private fun updateRetiredVehicles(fee: Int) {
-        retiredVehicles = retiredVehicles.copy(first = retiredVehicles.first + 1)
-        retiredVehicles = retiredVehicles.copy(second = retiredVehicles.second + fee)
+        retiredVehicles = retiredVehicles.copy(first = retiredVehicles.first + 1, second = retiredVehicles.second + fee)
     }
 
     fun showRetiredVehiclesInformation() {
